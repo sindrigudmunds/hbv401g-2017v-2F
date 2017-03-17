@@ -12,6 +12,8 @@ public class DatabaseManager
 {
 	private Connection connection = null;
 	
+	
+	// Creates a connection to the database
 	public void connect() {
 		
 		try {
@@ -29,6 +31,7 @@ public class DatabaseManager
 		}
 	}
 	  
+	// Closes the database connection
 	public void disconnect() {
 		try
 	    {
@@ -41,29 +44,24 @@ public class DatabaseManager
 	    }
 	}
 	  
-	
-	// Vandamál hér, það má ekki skila ResultSet út úr fallinu, gætum þurft lista eða eitthvað 
+	// Queries the database with the sql statements in the input
 	public ResultSet queryDatabase(String sql) {
-		//this.connect();
 		ResultSet rs = null;
 		try {
 			Statement statement = this.connection.createStatement();
 			statement.setQueryTimeout(30);
-		 System.out.println(sql);
+		System.out.println(sql);
 			rs = statement.executeQuery(sql);
-		System.out.println(rs.getString("flightID"));
 		}
 		catch(SQLException e)
 		{
 			System.err.println(e.getMessage());
 		}
-		//this.disconnect();
 		return rs;
 	}
 	  
-	
+	// Updates the database with the sql statements in the input
 	public void updateDatabase(String sql) {
-		//this.connect();
 		try {
 			PreparedStatement pstmt = this.connection.prepareStatement(sql);
 			pstmt.executeUpdate();
@@ -72,6 +70,5 @@ public class DatabaseManager
 		{
 			System.err.println(e.getMessage());
 		}
-		//this.disconnect();
 	}
 }

@@ -70,6 +70,9 @@ public class Flight {
 	public int getFlightPrice() {
 		return this.flightPrice;
 	}
+	public int getMAX_SEATS(){
+		return this.MAX_SEATS;
+	}
 }
 
 

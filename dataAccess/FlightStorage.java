@@ -77,7 +77,7 @@ public class FlightStorage {
 	
 	
 	
-//	// Creates Date from a string of the form "dd/MM/yyyy"
+//	Creates Date from a string of the form "dd/MM/yyyy"
 //	private Date stringToDate(String str) {
 //		Date date = null;
 //		try {

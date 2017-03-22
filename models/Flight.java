@@ -1,14 +1,11 @@
 package models;
 
-//nota kannski Date fyrir dagsetningarnar?
-//import java.util.Date;
-
 public class Flight {
 	private int flightID;
 	private String flightDepart;
 	private String flightDest;
-	private String flightTime; //  hh:mm 		kannski nota Date frekar?
-	private String flightDate; //  dd/mm/yyyy 	kannski nota Date frekar?
+	private String flightTime; //  hh:mm 	
+	private String flightDate; //  dd/mm/yyyy 	
 	private int availableSeats;
 	private int flightPrice;
 	private final int MAX_SEATS = 50;

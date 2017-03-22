@@ -1,11 +1,21 @@
 package managers;
 import models.*;
+
+import java.util.Date;
+
+import dataAccess.*;
+
 public class FlightManager {
 	
 	public Flight searchFlights(){
-		
+		String flightDepart = "AEY";
+		String flightDest = "RVK";
+		Date flightDate = 12.03.2017;
+		int availableSeats = 4;
+		FlightStorage.search(flightDepart, flightDest, flightDate, availableSeats);
 		return null;
 	}
+	
 	public void filterLocations(){
 		
 	}

@@ -13,7 +13,9 @@ import java.util.List;
 public class FlightStorage {
 	
 	// Searches for flights in the database that match the given properties
-	public Flight[] search(String flightDepart, String flightDest, Date flightDate, int availableSeats) {
+	public Flight[] search(String flightDepart, String flightDest, String flightD, int availableSeats) {
+		
+		Date flightDate = stringToDate(flightD);
 		
 		// Create strings to be able to return flights on "flexible" dates, 
 		// one day before and after the searched date
@@ -78,18 +80,18 @@ public class FlightStorage {
 	
 	
 //	Creates Date from a string of the form "dd/MM/yyyy"
-//	private Date stringToDate(String str) {
-//		Date date = null;
-//		try {
-//			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//			sdf.setLenient(false);
-//			date = sdf.parse(str);
-//			
-//		} catch (ParseException e) {
-//			System.err.println(e);
-//		}
-//		return date;
-//	}
+	private Date stringToDate(String str) {
+		Date date = null;
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			sdf.setLenient(false);
+			date = sdf.parse(str);
+			
+		} catch (ParseException e) {
+			System.err.println(e);
+		}
+		return date;
+	}
 	
 	
 	

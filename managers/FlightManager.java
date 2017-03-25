@@ -10,7 +10,7 @@ public class FlightManager {
 	public Flight searchFlights(){
 		String flightDepart = "AEY";
 		String flightDest = "RVK";
-		String flightDate = "02/04/2017";
+		Date flightDate = 12.03.2017;
 		int availableSeats = 4;
 		FlightStorage.search(flightDepart, flightDest, flightDate, availableSeats);
 		return null;

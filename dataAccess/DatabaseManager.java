@@ -23,7 +23,7 @@ public class DatabaseManager
 		}
 		
 		try {		
-			this.connection = DriverManager.getConnection("jdbc:sqlite:db.db");
+			this.connection = DriverManager.getConnection("jdbc:sqlite:db1.db");
 		}
 		catch(SQLException e)
 		{

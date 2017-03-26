@@ -52,7 +52,7 @@ public class FlightStorage {
 	
 	
 	// Creates an array of Flight objects from the database query results
-	public Flight[] convertToFlight(ResultSet rs) {
+	private Flight[] convertToFlight(ResultSet rs) {
 		
 		// First create an ArrayList from the results because we don't know how long the array has to be
 		List<Flight> flightList = new ArrayList<Flight>();
@@ -102,6 +102,17 @@ public class FlightStorage {
 		return formattedDate;
 	}
 	
+	
+	
+	public static void main(String[] args) {
+//		String flightDepart = "AEY";
+//		String flightDest = "REY";
+//		String flightDate = "16/03/2017";
+//		int availableSeats = 4;
+//		FlightStorage fs = new FlightStorage(); 
+//		Flight[] res = fs.search(flightDepart,flightDest, flightDate, availableSeats);
+//		System.out.println(res[0].getFlightID());	
+	}	
 
 }
 

@@ -8,12 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class FlightStorage {
 	
 	// Searches for flights in the database that match the given properties
-	public Flight[] search(String flightDepart, String flightDest, String flightD, int availableSeats) {
+	public ArrayList<Flight> search(String flightDepart, String flightDest, String flightD, int availableSeats) {
 		
 		Date flightDate = stringToDate(flightD);
 		
@@ -41,7 +40,7 @@ public class FlightStorage {
 		System.out.println(sql);
 		
 		// Change the ResultSet into an array of Flight objects
-		Flight[] flRes = convertToFlight(rs);
+		ArrayList<Flight> flRes = convertToFlight(rs);
 		
 		dm.disconnect();
 		
@@ -51,11 +50,11 @@ public class FlightStorage {
 	
 	
 	
-	// Creates an array of Flight objects from the database query results
-	private Flight[] convertToFlight(ResultSet rs) {
+	// Creates an AarrayList of Flight objects from the database query results
+	private ArrayList<Flight> convertToFlight(ResultSet rs) {
 		
-		// First create an ArrayList from the results because we don't know how long the array has to be
-		List<Flight> flightList = new ArrayList<Flight>();
+		// Create an ArrayList from the results 
+		ArrayList<Flight> flightList = new ArrayList<Flight>();
 		
 		// Iterate through all the results and make a Flight object from each of them
 		try {
@@ -69,11 +68,7 @@ public class FlightStorage {
 			System.err.println(e.getMessage());
 		}
 		
-		// The method has to return an array so the list is moved to an array
-		Flight[] flightArr = new Flight[flightList.size()];
-		flightArr = flightList.toArray(flightArr);
-	
-		return flightArr;		
+		return flightList;		
 	}
 	
 	

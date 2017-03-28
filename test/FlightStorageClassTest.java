@@ -4,6 +4,8 @@ import dataAccess.*;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,8 +14,8 @@ import org.junit.Test;
 public class FlightStorageClassTest {
 	//private FlightManager fm;
 	private FlightStorage fs;
-	private Flight[] results;
-	private Flight[] noResults;
+	private ArrayList<Flight> results;
+	private ArrayList<Flight> noResults;
 		
 	@Before
 	public void setUp() throws Exception {
@@ -33,13 +35,33 @@ public class FlightStorageClassTest {
 	
 	@Test
 	public void searchWithResults() {
-		assertTrue(results.length >= 1);
+		assertTrue(results.size() >= 1);
 	}
 
 	@Test
 	public void searchNoResults() {
 		//search should return an empty array if no matching flights are found
-		assertTrue(noResults.length == 0);
+		assertTrue(noResults.size() == 0);
+	}
+	
+	@Test
+	public void testDeparture() {
+		assertTrue(results.size() >= 1);
 	}
 
+	@Test
+	public void testDestination() {
+		assertTrue(results.size() >= 1);
+	}
+	
+	@Test
+	public void testDate() {
+		assertTrue(results.size() >= 1);
+	}
+	
+	@Test
+	public void testAvailableSeats() {
+		assertTrue(results.size() >= 1);
+	}
+	
 }

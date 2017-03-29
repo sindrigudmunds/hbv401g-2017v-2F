@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import models.Flight;
 
-public class FlightStorageMockResults {
+public class FlightStorageMockResults implements FlightStorage {
+	
+	
 	public ArrayList<Flight> search(String flightDepart, String flightDest, String flightD, int availableSeats) {
 		
 		ArrayList<Flight> flightList = new ArrayList<Flight>();

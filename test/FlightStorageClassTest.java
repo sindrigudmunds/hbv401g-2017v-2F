@@ -12,13 +12,13 @@ import org.junit.Test;
 
 
 public class FlightStorageClassTest {
-	private FlightStorage fs;
+	private FlightStorageImpl fs;
 	private ArrayList<Flight> results;
 	private ArrayList<Flight> noResults;
 		
 	@Before
 	public void setUp() throws Exception {
-		fs = new FlightStorage(); 
+		fs = new FlightStorageImpl(); 
 		results = fs.search("AEY", "REY", "26/03/2017", 4);
 		//We are asking for too many available seats so there should be no result
 		noResults = fs.search("AEY", "REY", "26/03/2017", 51); 

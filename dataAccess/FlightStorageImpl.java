@@ -13,7 +13,6 @@ public class FlightStorageImpl {
 	
 	// Searches for flights in the database that match the given properties
 	public ArrayList<Flight> search(String flightDepart, String flightDest, String flightD, int availableSeats) {
-		
 		Date flightDate = stringToDate(flightD);
 		
 		// Create strings to be able to return flights on "flexible" dates, 

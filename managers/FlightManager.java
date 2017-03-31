@@ -6,13 +6,20 @@ import java.util.Date;
 import dataAccess.*;
 
 public class FlightManager {
+	private FlightStorage fs;
+	private String flightDepart, flightDest, flightD;
+	private int availableSeats;
+	
+	
+	public boolean checkLegality(String flightDepart, String flightDest, int availableSeats, Date date){
+		if(flightDepart){
+			
+		}
+	}
 	
 	public Flight searchFlights(){
-		String flightDepart = "AEY";
-		String flightDest = "RVK";
-		Date flightDate = 12.03.2017;
-		int availableSeats = 4;
-		FlightStorage.search(flightDepart, flightDest, flightDate, availableSeats);
+		
+		fs.search(flightDepart, flightDest, flightD, availableSeats);
 		return null;
 	}
 	

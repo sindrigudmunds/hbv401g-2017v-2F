@@ -1,26 +1,24 @@
 package managers;
 import models.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import dataAccess.*;
 
 public class FlightManager {
 	private FlightStorage fs;
-	private String flightDepart, flightDest, flightD;
-	private int availableSeats;
-	
+
 	
 	public boolean checkLegality(String flightDepart, String flightDest, int availableSeats, Date date){
-		if(flightDepart){
-			
-		}
+		
+		return false;
 	}
 	
-	public Flight searchFlights(){
-		
-		fs.search(flightDepart, flightDest, flightD, availableSeats);
-		return null;
+	public ArrayList<Flight> searchFlights(String flightDepart, String flightDest, String flightD, int availableSeats){
+		ArrayList<Flight> results = new ArrayList<>();
+		results = fs.search(flightDepart, flightDest, flightD, availableSeats);
+		return results;
 	}
 	
 	public void filterLocations(){

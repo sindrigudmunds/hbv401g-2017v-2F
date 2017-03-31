@@ -12,7 +12,29 @@ public class FlightManager {
 	
 	public boolean checkLegality(String flightDepart, String flightDest, int availableSeats, Date date){
 		
-		return false;
+		boolean legal = true;
+		
+		switch(flightDepart){
+		case "AEY": 
+			if(!flightDest.equals("REY") || !flightDest.equals("GRM")) legal = false;
+			break;
+		case "REY": 
+			if(!flightDest.equals("AEY") || !flightDest.equals("ISF")||!flightDest.equals("EGS")) legal = false; 
+			break;
+		case "EGS":
+			if (!flightDest.equals("REY")) legal = false;
+			break;
+		case "ISF": 
+			if (!flightDest.equals("REY")) legal = false; 
+			break;
+		case "GRM": 
+			if (!flightDest.equals("AEY")) legal = false;
+			break;
+		default: legal = false;
+		}
+		
+		
+		return legal;
 	}
 	
 	public ArrayList<Flight> searchFlights(String flightDepart, String flightDest, String flightD, int availableSeats){

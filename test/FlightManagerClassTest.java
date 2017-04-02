@@ -37,7 +37,7 @@ public class FlightManagerClassTest {
 
 	@Test
 	public void searchNoResults() {
-		ArrayList<Flight> noResults = fmNoResults.searchFlights("AEY", "AEY", "26/03/2017", 5); 
+		ArrayList<Flight> noResults = fmNoResults.searchFlights("REY", "AEY", "26/03/2017", 5); 
 		//search should return an empty array if no matching flights are found
 		assertTrue(noResults.size() == 0);
 	}
@@ -66,6 +66,11 @@ public class FlightManagerClassTest {
 	public void throwsExeptionWhenEmptyDest() {
 		fmResults.searchFlights("AEY", "", "26/03/2017", 10); 
 	}
+	@Test (expected = IllegalArgumentException.class)
+	public void throwsExceptionWhenNotAccessibleDest(){
+		fmResults.searchFlights("AEY", "ISF", "26/03/2017", 10);
+	}
+	
 	
 
 }

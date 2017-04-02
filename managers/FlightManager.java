@@ -5,7 +5,7 @@ import java.util.ArrayList;
 //import java.util.Date;
 
 import dataAccess.*;
-
+import java.lang.*;
 public class FlightManager {
 	private FlightStorage fs;
 
@@ -41,12 +41,14 @@ public class FlightManager {
 	}
 	
 	public ArrayList<Flight> searchFlights(String flightDepart, String flightDest, String flightD, int availableSeats){
+		ArrayList<Flight> results = new ArrayList<>();
+		
 		if(!checkLegality(flightDepart, flightDest, flightD, availableSeats)){
 			throw new
 			IllegalArgumentException();
+		}else{
+			results = fs.search(flightDepart, flightDest, flightD, availableSeats);
 		}
-		ArrayList<Flight> results = new ArrayList<>();
-		results = fs.search(flightDepart, flightDest, flightD, availableSeats);
 		
 		return results;
 	}

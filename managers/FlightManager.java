@@ -1,8 +1,9 @@
 package managers;
 import models.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-//import java.util.Date;
 
 import dataAccess.*;
 public class FlightManager {
@@ -12,10 +13,11 @@ public class FlightManager {
 		this.fs = fsnew;
 	}
 	
-	public boolean checkLegality(String flightDepart, String flightDest, String flightD, int availableSeats){
+	public boolean checkLegality(String flightDepart, String flightDest, String flightDate, int availableSeats){
 		
 		boolean legal = true;
 		
+		// Check if the departure and destination is legal
 		switch(flightDepart){
 		case "AEY": 
 			if(!(flightDest.equals("REY")) && !(flightDest.equals("GRM"))) legal = false;
@@ -34,9 +36,19 @@ public class FlightManager {
 			break;
 		default: legal = false;
 		}
+		
+		// Check if trying to book too many seats or too few
 		if(availableSeats < 1 || availableSeats >50) legal = false;
 		
-		System.out.println(legal);
+		// Check if the date entered is a valid date
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		df.setLenient(false);
+	    try {
+	        df.parse(flightDate);
+	    } catch (ParseException e) {
+	        legal = false;
+	    }
+		
 		return legal;
 	}
 	
@@ -48,11 +60,12 @@ public class FlightManager {
 		if(isLegal){
 			results = fs.search(flightDepart, flightDest, flightD, availableSeats);
 		}else{
-			throw new
-			IllegalArgumentException();
+			throw new IllegalArgumentException();
 			
 		}
-		
 		return results;
 	}
+	
+	
+	
 }

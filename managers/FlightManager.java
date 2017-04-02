@@ -35,20 +35,19 @@ public class FlightManager {
 			break;
 		default: legal = false;
 		}
-		if(availableSeats < 1) legal = false;
-		
+		if(availableSeats < 1 || availableSeats >50) legal = false;
 		
 		return legal;
 	}
 	
 	public ArrayList<Flight> searchFlights(String flightDepart, String flightDest, String flightD, int availableSeats){
-		ArrayList<Flight> results = new ArrayList<>();
-		boolean isLegal;
-		isLegal = checkLegality(flightDepart, flightDest, flightD, availableSeats);
-		
-		if(isLegal == true){
-			results = fs.search(flightDepart, flightDest, flightD, availableSeats);
+		if(!checkLegality(flightDepart, flightDest, flightD, availableSeats)){
+			throw new
+			IllegalArgumentException();
 		}
+		ArrayList<Flight> results = new ArrayList<>();
+		results = fs.search(flightDepart, flightDest, flightD, availableSeats);
+		
 		return results;
 	}
 }

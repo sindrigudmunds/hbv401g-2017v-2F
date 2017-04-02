@@ -9,6 +9,9 @@ import dataAccess.*;
 public class FlightManager {
 	private FlightStorage fs;
 
+	public FlightManager(FlightStorage fsnew){
+		this.fs = fsnew;
+	}
 	
 	public boolean checkLegality(String flightDepart, String flightDest, String flightD, int availableSeats){
 		

@@ -2,14 +2,11 @@ package test;
 import managers.*;
 import models.*;
 import dataAccess.*;
-
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import org.junit.*;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 public class FlightManagerClassTest {
 	private FlightStorage fsResults, fsNoResults;
@@ -47,27 +44,27 @@ public class FlightManagerClassTest {
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void throwsExeptionWhenTooManySeats() {
-		fmResults.search("AEY", "REY", "26/03/2017", 51); 
+		fmResults.searchFlights("AEY", "REY", "26/03/2017", 51); 
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void throwsExeptionWhenTooFewSeats() {
-		fmResults.search("AEY", "REY", "26/03/2017", 0); 
+		fmResults.searchFlights("AEY", "REY", "26/03/2017", 0); 
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void throwsExeptionWhenIllegalDate() {
-		fmResults.search("AEY", "REY", "33/03/2017", 10); 
+		fmResults.searchFlights("AEY", "REY", "33/03/2017", 10); 
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void throwsExeptionWhenEmptyDeparture() {
-		fmResults.search("", "REY", "26/03/2017", 10); 
+		fmResults.searchFlights("", "REY", "26/03/2017", 10); 
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void throwsExeptionWhenEmptyDest() {
-		fmResults.search("AEY", "", "26/03/2017", 10); 
+		fmResults.searchFlights("AEY", "", "26/03/2017", 10); 
 	}
 	
 

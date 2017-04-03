@@ -98,13 +98,43 @@ public class FlightStorageImpl {
 	
 	
 	public static void main(String[] args) {
-//		String flightDepart = "AEY";
+
+		//		String flightDepart = "AEY";
 //		String flightDest = "REY";
 //		String flightDate = "16/03/2017";
 //		int availableSeats = 4;
 //		FlightStorage fs = new FlightStorage(); 
 //		Flight[] res = fs.search(flightDepart,flightDest, flightDate, availableSeats);
-//		System.out.println(res[0].getFlightID());	
+//		System.out.println(res[0].getFlightID());
+		
+		
+		
+		// Add a flight to the table
+//		DatabaseManager dm = new DatabaseManager();
+//		dm.connect();
+//		String sql = "INSERT INTO Flights(flightID, flightDepart, flightDest, flightTime, flightDate, availableSeats, MAX_SEATS, flightPrice)" +
+//		"VALUES (541, 'REY', 'AEY', '16:00', '02/05/2017', 5, 50, 15000);";
+//		System.out.println(sql);
+//		dm.updateDatabase(sql);
+//		dm.disconnect();
+//		
+//		DatabaseManager dm = new DatabaseManager();
+//		dm.connect();
+//		for (int i=1; i<15; i++) {
+//			Random rand = new Random();
+//			int seats = rand.nextInt((50+1) - 0) + 0;
+//			int price = 10000+(rand.nextInt((7+1) - 0) + 0)*1000;
+//		String sql = "INSERT INTO Flights(flightID, flightDepart, flightDest, flightTime, flightDate, availableSeats, MAX_SEATS, flightPrice)" +
+//		"VALUES ("+(900+i)+", 'ISF', 'REY', '09:00', '"+(16+i)+"/04/2017', "+seats+", 50, "+price+");";
+//		System.out.println(sql);
+//		dm.updateDatabase(sql);
+//		}
+//		dm.disconnect();
+//		
+
+		
+		
+		
 	}	
 
 }

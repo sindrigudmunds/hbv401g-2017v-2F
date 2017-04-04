@@ -13,7 +13,15 @@ public class Booking {
 	//private int nrOfPassengers;
 	private ArrayList<Passenger> passengers;
 	
-	//Calculates the total price according to the number of passengers and bags
+	public Booking(Flight flight, int nrBag, ArrayList<Passenger> passengers, String specialNeeds){
+		this.flight = flight;
+		this.nrBag = nrBag;
+		this.passengers = passengers;
+		this.specialNeeds = specialNeeds;
+		this.totalPrice = calcTotalPrice();
+	}
+	
+	//Calculates the total price according to the number of passengers and bags and sets the result as totalPrice
 	public int calcTotalPrice(){
 		int tempPrice = 0;
 		int flightPrice = flight.getFlightPrice();
@@ -30,10 +38,28 @@ public class Booking {
 		this.totalPrice = bagPrice + tempPrice;
 		return this.totalPrice;
 	}
+	
 	public int getNrAdult(){
 		return this.nrAdult;
 	}
+	
 	public int getNrChildren(){
 		return this.nrChildren;
+	}
+	
+	public int getTotalPrice(){
+		return this.totalPrice;
+	}
+	
+	public int getFlightID(){
+		return this.flight.getFlightID();
+	}
+	
+	public void setBookingID(int ID){
+		this.bookingID = ID;
+	}
+	
+	public int getBookingID(){
+		return this.bookingID;
 	}
 }

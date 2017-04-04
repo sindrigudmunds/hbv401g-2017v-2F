@@ -23,7 +23,7 @@ public class FlightManager {
 			if(!(flightDest.equals("REY")) && !(flightDest.equals("GRM"))) legal = false;
 			break;
 		case "REY": 
-			if(!(flightDest.equals("AEY")) && !(flightDest.equals("ISF"))&&!(flightDest.equals("EGS"))) legal = false; 
+			if(!(flightDest.equals("AEY")) && !(flightDest.equals("ISF")) && !(flightDest.equals("EGS"))) legal = false; 
 			break;
 		case "EGS":
 			if (!(flightDest.equals("REY"))) legal = false;

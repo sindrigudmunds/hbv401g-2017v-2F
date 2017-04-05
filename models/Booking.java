@@ -62,4 +62,13 @@ public class Booking {
 	public int getBookingID(){
 		return this.bookingID;
 	}
+	public String getSpecialNeeds(){
+		return this.specialNeeds;
+	}
+	public ArrayList<Passenger> getPassengers(){
+		return this.passengers;
+	}
+	public int getNrBag(){
+		return this.nrBag;
+	}
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class FlightStorageImpl {
+public class FlightStorageImpl implements FlightStorage {
 	
 	// Searches for flights in the database that match the given properties
 	public ArrayList<Flight> search(String flightDepart, String flightDest, String flightD, int availableSeats) {

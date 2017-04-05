@@ -7,19 +7,24 @@ public class BookingManager {
 	private BookingStorage bs;
 	//private Booking booking;
 	
-	public boolean checkLegality(Flight flight, int nrBag, ArrayList<Passenger> passengers, String specialNeeds){
+	public boolean checkLegality(Booking booking){
 		boolean legal = true;
-		
-		if(nrBag<0) legal = false;
-		if(passengers.isEmpty()) legal = false;
-		if(flight.getAvailableSeats() < passengers.size()) legal = false;
+		if(booking.getNrBag()<0) legal = false;
+		if(booking.getPassengers().isEmpty()) legal = false;
+		if(booking.getFlight().getAvailableSeats() < booking.getPassengers().size()) legal = false;
 		
 		return legal;
 	}
 	
-	public void createBooking(Flight flight, int nrBag, ArrayList<Passenger> passengers, String specialNeeds){
+	public int createBooking(Flight flight, int nrBag, ArrayList<Passenger> passengers, String specialNeeds){
 		Booking newBooking = new Booking(flight, nrBag, passengers, specialNeeds);
-		newBooking.setBookingID(bs.addBooking(newBooking));
+		if(checkLegality(newBooking)){
+			newBooking.setBookingID(bs.addBooking(newBooking));
+			return newBooking.getBookingID();
+		}
+		//newBooking.setBookingID(bs.addBooking(newBooking));
+		//return newBooking.getBookingID();
+		return 0;
 	}
 
 }

@@ -71,4 +71,7 @@ public class Booking {
 	public int getNrBag(){
 		return this.nrBag;
 	}
+	public Flight getFlight(){
+		return this.flight;
+	}
 }

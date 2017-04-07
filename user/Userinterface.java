@@ -2,13 +2,19 @@ package user;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import managers.*;
+import dataAccess.*;
+import models.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
+//import com.jgoodies.forms.layout.FormLayout;
+//import com.jgoodies.forms.layout.ColumnSpec;
+//import com.jgoodies.forms.layout.RowSpec;
 import java.awt.FlowLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -19,18 +25,28 @@ import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import javax.swing.ScrollPaneConstants;
+import java.awt.Font;
 
 public class Userinterface extends JFrame {
 
+	private FlightManager fm;
+	private FlightStorageImpl fs;
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField textField;
 	private JTextField textField_1;
+	private DefaultTableModel tableModel;
+	
 
 	/**
 	 * Launch the application.
@@ -52,18 +68,25 @@ public class Userinterface extends JFrame {
 	 * Create the frame.
 	 */
 	public Userinterface() {
+		fs = new FlightStorageImpl();
+		fm = new FlightManager(fs);
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Userinterface.class.getResource("/user/takeoff.png")));
 		setTitle("Flight booking");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 531);
+		setBounds(100, 100, 501, 710);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
 		JButton btnBka = new JButton("Book flight");
-		
-		table = new JTable();
-		
+		String data[][] = {};
+		String col[] = {"Flight nr.","From", "To", "Time", "Tate", "Avail. Seats", "Price Adult"};
+	    tableModel = new DefaultTableModel(data,col);
+ 
+        
+        
+        
 		JLabel lblNewLabel = new JLabel("Departing from");
 		
 		JLabel lblNewLabel_1 = new JLabel("Going to");
@@ -87,6 +110,14 @@ public class Userinterface extends JFrame {
 		JComboBox comboBox_4 = new JComboBox();
 		
 		JButton btnSearch = new JButton("Search");
+		btnSearch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ArrayList<Flight> flights = fm.searchFlights("REY", "AEY", "20/04/2017", 4);
+				showResults(flights);
+			}
+		});
+		
 		
 		JLabel lblSelectFlightNr = new JLabel("Select flight nr. ");
 		
@@ -105,46 +136,11 @@ public class Userinterface extends JFrame {
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
+		
+		JPanel panel = new JPanel();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNewLabel)
-								.addComponent(lblNewLabel_1))
-							.addGap(21)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(comboBox_1, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(comboBox, 0, 67, Short.MAX_VALUE))
-							.addGap(26)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblDate)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(rdbtnFlexableDates))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblAdults)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(comboBox_3, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(lblChildre)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(comboBox_4, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(39)
-							.addComponent(table, GroupLayout.PREFERRED_SIZE, 333, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(47, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(116)
-					.addComponent(lblSelectFlightNr)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(comboBox_5, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(155, Short.MAX_VALUE))
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
@@ -161,20 +157,55 @@ public class Userinterface extends JFrame {
 						.addComponent(comboBox_6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(textField, GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
 						.addComponent(textField_1))
-					.addContainerGap(138, Short.MAX_VALUE))
+					.addContainerGap(171, Short.MAX_VALUE))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(172, Short.MAX_VALUE)
+					.addContainerGap(209, Short.MAX_VALUE)
 					.addComponent(btnBka)
 					.addGap(169))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(167, Short.MAX_VALUE)
+					.addContainerGap(214, Short.MAX_VALUE)
 					.addComponent(btnSearch)
 					.addGap(192))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewLabel)
+						.addComponent(lblNewLabel_1))
+					.addGap(21)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(comboBox_1, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(comboBox, 0, 67, Short.MAX_VALUE))
+					.addGap(26)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblDate)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(rdbtnFlexableDates))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblAdults)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(comboBox_3, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblChildre)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(comboBox_4, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(35, Short.MAX_VALUE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(114)
+					.addComponent(lblSelectFlightNr)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(comboBox_5, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(198, Short.MAX_VALUE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(22, Short.MAX_VALUE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel)
 						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -191,13 +222,13 @@ public class Userinterface extends JFrame {
 						.addComponent(comboBox_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(26)
 					.addComponent(btnSearch)
-					.addGap(18)
-					.addComponent(table, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
+					.addGap(9)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 243, GroupLayout.PREFERRED_SIZE)
+					.addGap(56)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSelectFlightNr)
 						.addComponent(comboBox_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(31)
+					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNamesOfPassangers))
@@ -213,6 +244,36 @@ public class Userinterface extends JFrame {
 					.addComponent(btnBka)
 					.addContainerGap())
 		);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		panel.add(scrollPane);
+		
+		
+		table = new JTable();
+		table.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		scrollPane.setViewportView(table);
+		table.setModel(tableModel);
 		contentPane.setLayout(gl_contentPane);
+		table.getTableHeader().setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+	}
+	
+	// Show search results in the table
+	private void showResults(ArrayList<Flight> flights) {
+		for (int i=0; i<flights.size(); i++) {
+			Flight fl = flights.get(i);
+			int flightID = fl.getFlightID();
+			String flightDepart = fl.getFlightDepart();
+			String flightDest = fl.getFlightDest();
+			String flightTime = fl.getFlightTime();
+			String flightDate = fl.getFlightDate();
+			int availableSeats = fl.getAvailableSeats();
+			int price = fl.getFlightPrice();
+			Object[] row = new Object[] { flightID, flightDepart, flightDest, flightTime, flightDate, availableSeats, price  };
+			tableModel.addRow(row);
+		}	
+		
+
 	}
 }

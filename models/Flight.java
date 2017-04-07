@@ -10,7 +10,6 @@ public class Flight {
 	private int flightPrice;
 	private final int MAX_SEATS = 50;
 	
-	// Costructor
 	public Flight(int flightID, String flightDepart, String flightDest, String flightTime, String flightDate, int availableSeats, int flightPrice) {
 		this.flightID = flightID;
 		this.flightDepart = flightDepart;
@@ -20,7 +19,6 @@ public class Flight {
 		this.availableSeats = availableSeats;
 		this.flightPrice = flightPrice;
 	}
-	
 	
 //Ekki víst að það þurfi þessi föll
 	

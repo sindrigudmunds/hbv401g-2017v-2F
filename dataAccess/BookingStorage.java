@@ -1,41 +1,32 @@
 package dataAccess;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import models.*;
 
 public class BookingStorage {
 
-
 	public int addBooking(Booking b) {
-	// Add the booking to the database
+		// Add the booking to the database
 		DatabaseManager dm = new DatabaseManager();
 		dm.connect();
 		String sql = "INSERT INTO Bookings(flight, nrAdult, nrChildren, nrBag, totalPrice, specialNeeds)" +
 		"VALUES ("+b.getFlightID()+", "+b.getNrAdult()+", "+b.getNrChildren()+", "+b.getNrBag()+", "+b.getTotalPrice()+", '"+b.getSpecialNeeds()+"');";
-		System.out.println(sql);
 		int id = dm.updateDatabaseGetID(sql);
-		System.out.println(id);
 		dm.disconnect();
 	
-	// Reserve seats for the passengers in the chosen flight
+		// Reserve seats for the passengers in the chosen flight
 		updateAvailableSeats(b.getFlightID(), -(b.getNrAdult()+b.getNrChildren()));
 		
+		// return the new unique booking id
 		return id;
 	}
 	
 	// returns true if there is some booking with this id in the database and false if not
 	public boolean isInDatabase(int id) {
-		// Connect to the database
 		DatabaseManager dm = new DatabaseManager();
 		dm.connect();
-				
-		// Query the database
-		String sql = "SELECT * FROM Bookings Where bookingID = '" + id +";";
-				
+		String sql = "SELECT * FROM Bookings WHERE bookingID = " + id +";";
 		ResultSet rs = dm.queryDatabase(sql);
-		System.out.println(sql);
 				
 		// Check if there is a booking with the id
 		boolean exists = false;
@@ -53,13 +44,45 @@ public class BookingStorage {
 		return exists;
 	}
 	
+	// Removes the booking with bookingID = id from the database if it exists
 	public void removeBooking(int id) {
-		//ToDo:
-		//Eyða þessari bókun úr grunni
-		//Auka fjölda lausra sæta í vélinni um fjölda farþega í bókun
+		// Don't do anything if the booking doesn't exist
+		if (!isInDatabase(id)) {
+			return;
+		} else {
+			DatabaseManager dm = new DatabaseManager();
+			dm.connect();
+			String sql = "SELECT * FROM Bookings Where bookingID = " + id +";";
+			
+			// Get the flight id and number of passengers from this booking
+			int flightID = -1;
+			int nrPassengers = -1;
+			ResultSet rs = dm.queryDatabase(sql);
+			try {
+				while(rs.next()) {
+					flightID = rs.getInt("flight");
+					nrPassengers = (rs.getInt("nrAdult")+rs.getInt("nrChildren"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			dm.disconnect();
+		
+			// Delete the booking
+			dm.connect();
+			sql = "DELETE FROM Bookings WHERE bookingID="+id+";";
+			dm.updateDatabase(sql);
+			dm.disconnect();
+				
+			// Increment the number of available seats in the flight
+			if (flightID >= 0 && nrPassengers >= 0) {
+				updateAvailableSeats(flightID, nrPassengers);
+			}
+			
+			return;
+		}
 	}
 	
-
 	// adds "nr" to the amount of available seats in flight number "flightID"
 	// updateAvailableSeats(510, -8) books eight seats in the flight with ID 510
 	private void updateAvailableSeats(int flightID, int nr) {
@@ -68,48 +91,7 @@ public class BookingStorage {
 		String sql = 	"UPDATE Flights " +
 						"SET availableSeats = availableSeats + " + nr + " " + 
 						"WHERE flightID = "+ flightID+ ";";
-		System.out.println(sql);
 		dm.updateDatabase(sql);
 		dm.disconnect();
 	}
-	
-	public static void main(String[] args) {
-	// Create the Bookings table in database
-//		DatabaseManager dm = new DatabaseManager();
-//		dm.connect();
-//		String sql = "CREATE TABLE Bookings ( " +
-//				"bookingID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//				"flight INTEGER NOT NULL, " + 
-//				"nrAdult INTEGER, " +
-//				"nrChildren INTEGER, " +
-//				"nrBag INTEGER, " +
-//				"totalPrice INTEGER, " +
-//				"specialNeeds TEXT, " + 
-//				"FOREIGN KEY (flight) REFERENCES Flights(flightID));";
-//		System.out.println(sql);
-//		dm.updateDatabase(sql);
-//		dm.disconnect();
-		
-
-		// Add a booking to the table
-//		DatabaseManager dm = new DatabaseManager();
-//		dm.connect();
-//		String sql = "INSERT INTO Bookings(flight, nrAdult, nrChildren, nrBag, totalPrice, specialNeeds)" +
-//		"VALUES (313, 2, 1, 3, 35000, 'Peanut allergies!');";
-//		System.out.println(sql);
-//		dm.updateDatabase(sql);
-//		dm.disconnect();
-		
-		
-//		DatabaseManager dm = new DatabaseManager();
-//		dm.connect();
-//		String sql = "INSERT INTO Bookings(flight, nrAdult, nrChildren, nrBag, totalPrice, specialNeeds)" +
-//		"VALUES (313, 2, 1, 3, 35000, 'Peanut allergies!');";
-//		System.out.println(sql);
-//		int id = dm.updateDatabaseGetID(sql);
-//		System.out.println(id);
-//		dm.disconnect();
-
-	}
-	
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class PassengerManager {
 	private ArrayList<Passenger> passengers;
 	
-	private PassengerManager() {
+	public PassengerManager() {
 		passengers = new ArrayList<Passenger>();
 	}
 	

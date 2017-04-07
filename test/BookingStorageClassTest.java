@@ -1,6 +1,5 @@
 package test;
 import models.*;
-import managers.*;
 import dataAccess.*;
 import static org.junit.Assert.*;
 
@@ -21,12 +20,13 @@ public class BookingStorageClassTest {
 	public ArrayList<Passenger> passengers;
 	public String specialNeeds;
 	public Booking b;
-	public int id;
+
 	
 
 	@Before
 	public void setUp() throws Exception {
 		bs = new BookingStorage();
+		pm = new PassengerManager();
 		flight = new Flight(201, "GRM", "AEY", "15:00", "17/04/2017", 35, 17000);
 		nrBag = 6; 
 		p_a = new Passenger("Jón", true);
@@ -54,12 +54,13 @@ public class BookingStorageClassTest {
 
 	@Test
 	public void testIfAddedToDatabase() {
-		id = bs.addBooking(b);
+		int id = bs.addBooking(b);
 		assertTrue(bs.isInDatabase(id));
 	}
 	
 	@Test
 	public void testIfDeletedFromDatabase() {
+		int id = bs.addBooking(b);
 		bs.removeBooking(id);
 		assertFalse(bs.isInDatabase(id));
 	}

@@ -36,6 +36,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Userinterface extends JFrame {
 
@@ -80,8 +82,13 @@ public class Userinterface extends JFrame {
 		setContentPane(contentPane);
 		
 		JButton btnBka = new JButton("Book flight");
+		btnBka.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				resetTable();
+			}
+		});
 		String data[][] = {};
-		String col[] = {"Flight nr.","From", "To", "Time", "Tate", "Avail. Seats", "Price Adult"};
+		String col[] = {"Flight nr.","From", "To", "Time", "Date", "Avail. Seats", "Price Adult"};
 	    tableModel = new DefaultTableModel(data,col);
  
         
@@ -113,7 +120,13 @@ public class Userinterface extends JFrame {
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ArrayList<Flight> flights = fm.searchFlights("REY", "AEY", "20/04/2017", 4);
+				String departure = getSelectedDeparture();
+				String dest = getSelectedDest();
+				String date = getSelectedDate();
+				int nrPassengers = getSelectedNrPassengers();
+				ArrayList<Flight> flights = fm.searchFlights(departure, dest, date, nrPassengers);
+				// Clear previous results from the table before showing new ones
+				resetTable();
 				showResults(flights);
 			}
 		});
@@ -273,7 +286,31 @@ public class Userinterface extends JFrame {
 			Object[] row = new Object[] { flightID, flightDepart, flightDest, flightTime, flightDate, availableSeats, price  };
 			tableModel.addRow(row);
 		}	
-		
-
 	}
+	
+	// Reset the table before showing new results
+	private void resetTable() {
+		tableModel.setRowCount(0);
+	}
+	
+	private String getSelectedDeparture() {
+		return "REY";
+		// TODO: láta þetta virka með UI inputinu
+	}
+	
+	private String getSelectedDest() {
+		return "AEY";
+		// TODO: láta þetta virka með UI inputinu
+	}
+	
+	private String getSelectedDate() {
+		return "28/04/2017";
+		// TODO: láta þetta virka með UI inputinu
+	}
+	
+	private int getSelectedNrPassengers() {
+		return 3;
+		// TODO: láta þetta virka með UI inputinu
+	}
+	
 }

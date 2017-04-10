@@ -31,7 +31,8 @@ public class FlightStorageImpl implements FlightStorage {
 		String sql = "SELECT * FROM Flights Where flightDepart = '" + flightDepart + "'" +
 					 " AND flightDest = '"+ flightDest + "'" +
 					 " And flightDate IN ("+ flexDates +")"+
-					 " AND availableSeats >= "+ availableSeats+";";
+					 " AND availableSeats >= "+ availableSeats+
+					 " ORDER BY flightDate;";
 		
 		ResultSet rs = dm.queryDatabase(sql);		
 		

@@ -39,6 +39,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class Userinterface extends JFrame {
 
@@ -106,8 +107,10 @@ public class Userinterface extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("Going to");
 		
 		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Reykjav\u00EDk", "Akureyri", "Egilssta\u00F0ir", "Gr\u00EDmsey"}));
 		
 		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Reykjav\u00EDk", "Akureyri", "Egilssta\u00F0ir", "Gr\u00EDmsey"}));
 		
 		JLabel lblDate = new JLabel("Date");
 		
@@ -116,10 +119,12 @@ public class Userinterface extends JFrame {
 		JLabel lblAdults = new JLabel("Adults");
 		
 		JComboBox comboBox_3 = new JComboBox();
+		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9"}));
 		
 		JLabel lblChildre = new JLabel("Children");
 		
 		JComboBox comboBox_4 = new JComboBox();
+		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
 		
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addMouseListener(new MouseAdapter() {
@@ -150,6 +155,7 @@ public class Userinterface extends JFrame {
 		JLabel lblNumbersOfBags = new JLabel("Numbers of bags");
 		
 		JComboBox comboBox_6 = new JComboBox();
+		comboBox_6.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
 		
 		JLabel lblSpecialRec = new JLabel("Special requests");
 		

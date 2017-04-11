@@ -144,10 +144,10 @@ public class Userinterface extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("Going to");
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Reykjav\u00EDk", "Akureyri", "Egilssta\u00F0ir", "Gr\u00EDmsey"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Reykjav\u00EDk", "Akureyri", "Egilssta\u00F0ir", "Gr\u00EDmsey", "\u00CDsafj\u00F6r\u00F0ur"}));
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Reykjav\u00EDk", "Akureyri", "Egilssta\u00F0ir", "Gr\u00EDmsey"}));
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Reykjav\u00EDk", "Akureyri", "Egilssta\u00F0ir", "Gr\u00EDmsey", "\u00CDsafj\u00F6r\u00F0ur"}));
 		
 		JLabel lblDate = new JLabel("Date");
 		

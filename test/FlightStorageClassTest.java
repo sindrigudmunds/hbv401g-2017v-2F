@@ -19,8 +19,8 @@ public class FlightStorageClassTest {
 	@Before
 	public void setUp() throws Exception {
 		fs = new FlightStorageImpl(); 
-		results = fs.search("AEY", "REY", "29/04/2017", 4);
-		noResults = fs.search("AEY", "AEY", "26/03/2017", 5); 
+		results = fs.search("AEY", "REY", "29/04/2017", 4, true);
+		noResults = fs.search("AEY", "AEY", "26/03/2017", 5, true); 
 	}
 	
 

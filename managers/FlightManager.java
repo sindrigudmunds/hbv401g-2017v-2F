@@ -52,13 +52,13 @@ public class FlightManager {
 		return legal;
 	}
 	
-	public ArrayList<Flight> searchFlights(String flightDepart, String flightDest, String flightD, int availableSeats){
+	public ArrayList<Flight> searchFlights(String flightDepart, String flightDest, String flightD, int availableSeats, boolean flexible){
 		ArrayList<Flight> results = new ArrayList<>();
 		boolean isLegal;
 		isLegal = checkLegality(flightDepart, flightDest, flightD, availableSeats);
 		
 		if(isLegal){
-			results = fs.search(flightDepart, flightDest, flightD, availableSeats);
+			results = fs.search(flightDepart, flightDest, flightD, availableSeats, flexible);
 		}else{
 			throw new IllegalArgumentException();
 			

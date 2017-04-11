@@ -5,5 +5,5 @@ import java.util.ArrayList;
 import models.Flight;
 
 public interface FlightStorage {
-	public ArrayList<Flight> search(String flightDepart, String flightDest, String flightD, int availableSeats);
+	public ArrayList<Flight> search(String flightDepart, String flightDest, String flightD, int availableSeats, boolean flexible);
 }

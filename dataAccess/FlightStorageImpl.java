@@ -12,16 +12,22 @@ import java.util.Date;
 public class FlightStorageImpl implements FlightStorage {
 	
 	// Searches for flights in the database that match the given properties
-	public ArrayList<Flight> search(String flightDepart, String flightDest, String flightD, int availableSeats) {
+	public ArrayList<Flight> search(String flightDepart, String flightDest, String flightD, int availableSeats, boolean flexible) {
 		// Create strings to be able to return flights on "flexible" dates, 
 		// one day before and after the searched date
-		ArrayList<String> dates = flexibleDates(flightD,3);
+		ArrayList<String> dates;
+		if (flexible) {
+			dates = flexibleDates(flightD,3);
+		} else {
+			dates = flexibleDates(flightD,0);
+		}
+			
+		// Populate a string of the flexible dates
 		String flexDates = "";
 		for(int i = 0; i<(dates.size()-1); i++) {
 			flexDates = flexDates + dates.get(i)+","; 
 		}
 		flexDates = flexDates + dates.get(dates.size()-1);
-		System.out.println(flexDates);
 			
 		// Connect to the database
 		DatabaseManager dm = new DatabaseManager();

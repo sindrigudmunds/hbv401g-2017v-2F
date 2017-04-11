@@ -129,7 +129,8 @@ public class Userinterface extends JFrame {
 				String dest = getSelectedDest();
 				String date = getSelectedDate();
 				int nrPassengers = getSelectedNrPassengers();
-				ArrayList<Flight> flights = fm.searchFlights(departure, dest, date, nrPassengers);
+				boolean flexible = getFlexibleDates();
+				ArrayList<Flight> flights = fm.searchFlights(departure, dest, date, nrPassengers, flexible);
 				// Clear previous results from the table before showing new ones
 				resetTable();
 				showResults(flights);
@@ -318,6 +319,12 @@ public class Userinterface extends JFrame {
 		// TODO: láta þetta virka með UI inputinu
 	}
 	
+	private boolean getFlexibleDates() {
+		// Does the user want to search by flexible dates?
+		return false; //Taka burt
+		// TODO: Láta þetta tékka hvort notandi vill leita að flexible 
+	}
+	
 	// Creates a new booking in the database with information from the UI
 	private int createBooking() {
 		Flight flight = getSelectedFlight();
@@ -356,6 +363,5 @@ public class Userinterface extends JFrame {
 		return "Passenger with a dog"; // Taka burt
 		// TODO: skila textanum úr special needs glugganum
 	}
-	
 	
 }

@@ -31,44 +31,44 @@ public class FlightManagerClassTest {
 	@Test
 	public void searchWithResults() {
 		// Check that the results are returned as an non-empty ArrayList of Flights
-		ArrayList<Flight> results = fmResults.searchFlights("AEY", "REY", "26/03/2017", 4);
+		ArrayList<Flight> results = fmResults.searchFlights("AEY", "REY", "26/03/2017", 4, true);
 		assertTrue(results.size() >= 1);
 	}
 
 	@Test
 	public void searchNoResults() {
-		ArrayList<Flight> noResults = fmNoResults.searchFlights("REY", "AEY", "26/03/2017", 5); 
+		ArrayList<Flight> noResults = fmNoResults.searchFlights("REY", "AEY", "26/03/2017", 5, true); 
 		//search should return an empty array if no matching flights are found
 		assertTrue(noResults.size() == 0);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void throwsExeptionWhenTooManySeats() {
-		fmResults.searchFlights("AEY", "REY", "26/03/2017", 51); 
+		fmResults.searchFlights("AEY", "REY", "26/03/2017", 51, true); 
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void throwsExeptionWhenTooFewSeats() {
-		fmResults.searchFlights("AEY", "REY", "26/03/2017", 0); 
+		fmResults.searchFlights("AEY", "REY", "26/03/2017", 0, true); 
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void throwsExeptionWhenIllegalDate() {
-		fmResults.searchFlights("AEY", "REY", "33/03/2017", 10); 
+		fmResults.searchFlights("AEY", "REY", "33/03/2017", 10, true); 
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void throwsExeptionWhenEmptyDeparture() {
-		fmResults.searchFlights("", "REY", "26/03/2017", 10); 
+		fmResults.searchFlights("", "REY", "26/03/2017", 10, true); 
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void throwsExeptionWhenEmptyDest() {
-		fmResults.searchFlights("AEY", "", "26/03/2017", 10); 
+		fmResults.searchFlights("AEY", "", "26/03/2017", 10, true); 
 	}
 	@Test (expected = IllegalArgumentException.class)
 	public void throwsExceptionWhenNotAccessibleDest(){
-		fmResults.searchFlights("AEY", "ISF", "26/03/2017", 10);
+		fmResults.searchFlights("AEY", "ISF", "26/03/2017", 10, true);
 	}
 	
 	

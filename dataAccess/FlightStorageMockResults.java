@@ -7,7 +7,7 @@ import models.Flight;
 public class FlightStorageMockResults implements FlightStorage {
 	
 	
-	public ArrayList<Flight> search(String flightDepart, String flightDest, String flightD, int availableSeats) {
+	public ArrayList<Flight> search(String flightDepart, String flightDest, String flightD, int availableSeats, boolean flexible) {
 		
 		ArrayList<Flight> flightList = new ArrayList<Flight>();
 		

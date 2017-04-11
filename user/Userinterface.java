@@ -29,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
@@ -40,6 +41,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JMenu;
 
 public class Userinterface extends JFrame {
 
@@ -82,6 +84,41 @@ public class Userinterface extends JFrame {
 		setTitle("Flight booking");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 501, 710);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnFile = new JMenu("File");
+		menuBar.add(mnFile);
+		
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int ret = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?");
+			    if (ret == JOptionPane.YES_OPTION)
+				   System.exit(0);
+			}
+		});
+		mnFile.add(mntmExit);
+		
+		JMenu mnInfo = new JMenu("Info");
+		menuBar.add(mnInfo);
+		
+		JMenuItem mntmRulesAndRegulations = new JMenuItem("Rules and regulations");
+		mntmRulesAndRegulations.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog (null, "Booking with us does not book you a flight and we do not issue refunds. Have a nice day!", "Rules and regulations", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		mnInfo.add(mntmRulesAndRegulations);
+		
+		JMenuItem mntmAboutThisProgram = new JMenuItem("About this program");
+		mntmAboutThisProgram.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog (null, "This program was made for the class Þróun hugbúnaðar spring 2017 by Anna Karen, Guðrún Þóra and Sindri Þór", "About this program", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		mnInfo.add(mntmAboutThisProgram);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

@@ -7,6 +7,10 @@ public class BookingManager {
 	private BookingStorage bs;
 	//private Booking booking;
 	
+	public BookingManager() {
+		bs = new BookingStorage();
+	}
+	
 	public boolean checkLegality(Booking booking){
 		boolean legal = true;
 		if(booking.getNrBag()<0) legal = false;

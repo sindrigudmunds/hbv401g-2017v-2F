@@ -43,6 +43,7 @@ public class Userinterface extends JFrame {
 
 	private FlightManager fm;
 	private FlightStorageImpl fs;
+	private BookingManager bm;
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField textField;
@@ -72,6 +73,7 @@ public class Userinterface extends JFrame {
 	public Userinterface() {
 		fs = new FlightStorageImpl();
 		fm = new FlightManager(fs);
+		bm = new BookingManager();
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Userinterface.class.getResource("/user/takeoff.png")));
 		setTitle("Flight booking");
@@ -85,6 +87,9 @@ public class Userinterface extends JFrame {
 		btnBka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				resetTable();
+				int id = createBooking();
+				// TODO: birta skjá með id-inu svo notandinn viti að búið sé að bóka
+				System.out.println("Your booking number is: "+id);
 			}
 		});
 		String data[][] = {};
@@ -294,23 +299,63 @@ public class Userinterface extends JFrame {
 	}
 	
 	private String getSelectedDeparture() {
-		return "REY";
+		return "GRM"; //Taka burt
 		// TODO: láta þetta virka með UI inputinu
 	}
 	
 	private String getSelectedDest() {
-		return "AEY";
+		return "AEY"; //Taka burt
 		// TODO: láta þetta virka með UI inputinu
 	}
 	
 	private String getSelectedDate() {
-		return "28/04/2017";
+		return "28/04/2017"; //Taka burt
 		// TODO: láta þetta virka með UI inputinu
 	}
 	
 	private int getSelectedNrPassengers() {
-		return 3;
+		return 3; //Taka burt
 		// TODO: láta þetta virka með UI inputinu
 	}
+	
+	// Creates a new booking in the database with information from the UI
+	private int createBooking() {
+		Flight flight = getSelectedFlight();
+		int nrBag = getSelectedNrBag();
+		ArrayList<Passenger> passengers = getPassengers();
+		String specialNeeds = getSpecialNeeds();
+		int bookingID  = bm.createBooking(flight, nrBag, passengers, specialNeeds);
+		return bookingID;
+	}
+	
+	private Flight getSelectedFlight() {
+		// Taka burt
+		return new Flight(201, "GRM", "AEY", "15:00", "17/04/2017", 35, 17000);
+		// TODO: skila flug hlutnum sem notandi hefur valið
+	}
+	
+	private int getSelectedNrBag() {
+		return 5;//Taka burt
+		// TODO: skila fjölda taskna sem notandi hefur valið
+	}
+	
+	private ArrayList<Passenger> getPassengers() {
+		// Taka burt
+		PassengerManager pm = new PassengerManager();
+		Passenger p_a = new Passenger("Jón", true);
+		Passenger p_b = new Passenger("Gunna", true);
+		Passenger p_c = new Passenger("Óli", false);
+		pm.addPassenger(p_a);
+		pm.addPassenger(p_b);
+		pm.addPassenger(p_c);
+		return pm.getPassengers();
+		// TODO: láta passenger manager gera arraylist af passengers 
+	}
+	
+	private String getSpecialNeeds() {
+		return "Passenger with a dog"; // Taka burt
+		// TODO: skila textanum úr special needs glugganum
+	}
+	
 	
 }

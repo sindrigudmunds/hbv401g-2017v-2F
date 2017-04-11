@@ -38,6 +38,7 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
 
 public class Userinterface extends JFrame {
 
@@ -49,6 +50,7 @@ public class Userinterface extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private DefaultTableModel tableModel;
+	private JCheckBox chckbxFlexibleDates;
 	
 
 	/**
@@ -111,8 +113,6 @@ public class Userinterface extends JFrame {
 		
 		JComboBox comboBox_2 = new JComboBox();
 		
-		JRadioButton rdbtnFlexableDates = new JRadioButton("Flexible dates");
-		
 		JLabel lblAdults = new JLabel("Adults");
 		
 		JComboBox comboBox_3 = new JComboBox();
@@ -157,6 +157,8 @@ public class Userinterface extends JFrame {
 		textField_1.setColumns(10);
 		
 		JPanel panel = new JPanel();
+		
+		chckbxFlexibleDates = new JCheckBox("Flexible dates");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -197,20 +199,20 @@ public class Userinterface extends JFrame {
 					.addGap(26)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblDate)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(rdbtnFlexableDates))
-						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(lblAdults)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(comboBox_3, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(lblChildre)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox_4, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(35, Short.MAX_VALUE))
+							.addComponent(comboBox_4, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblDate)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(chckbxFlexibleDates)))
+					.addContainerGap(26, Short.MAX_VALUE))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(114)
 					.addComponent(lblSelectFlightNr)
@@ -224,13 +226,13 @@ public class Userinterface extends JFrame {
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addContainerGap(35, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel)
 						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblDate)
-						.addComponent(rdbtnFlexableDates))
+						.addComponent(chckbxFlexibleDates))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel_1)
@@ -320,9 +322,12 @@ public class Userinterface extends JFrame {
 	}
 	
 	private boolean getFlexibleDates() {
-		// Does the user want to search by flexible dates?
-		return false; //Taka burt
-		// TODO: Láta þetta tékka hvort notandi vill leita að flexible 
+		// Check if user wants to search by flexible dates or not
+		if (chckbxFlexibleDates.isSelected()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	// Creates a new booking in the database with information from the UI
@@ -363,5 +368,4 @@ public class Userinterface extends JFrame {
 		return "Passenger with a dog"; // Taka burt
 		// TODO: skila textanum úr special needs glugganum
 	}
-	
 }

@@ -42,6 +42,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JMenu;
+import com.toedter.calendar.JDateChooser;
 
 public class Userinterface extends JFrame {
 
@@ -124,6 +125,7 @@ public class Userinterface extends JFrame {
 		setContentPane(contentPane);
 		
 		JButton btnBka = new JButton("Book flight");
+		btnBka.setIcon(new ImageIcon(Userinterface.class.getResource("/user/rsz_luggage.png")));
 		btnBka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				resetTable();
@@ -151,8 +153,6 @@ public class Userinterface extends JFrame {
 		
 		JLabel lblDate = new JLabel("Date");
 		
-		JComboBox comboBox_2 = new JComboBox();
-		
 		JLabel lblAdults = new JLabel("Adults");
 		
 		JComboBox comboBox_3 = new JComboBox();
@@ -164,6 +164,7 @@ public class Userinterface extends JFrame {
 		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
 		
 		JButton btnSearch = new JButton("Search");
+		btnSearch.setIcon(new ImageIcon(Userinterface.class.getResource("/user/rsz_1spyglass.png")));
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -202,6 +203,8 @@ public class Userinterface extends JFrame {
 		JPanel panel = new JPanel();
 		
 		chckbxFlexibleDates = new JCheckBox("Flexible dates");
+		
+		JDateChooser dateChooser = new JDateChooser();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -221,13 +224,13 @@ public class Userinterface extends JFrame {
 						.addComponent(comboBox_6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(textField, GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
 						.addComponent(textField_1))
-					.addContainerGap(171, Short.MAX_VALUE))
+					.addContainerGap(189, Short.MAX_VALUE))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(209, Short.MAX_VALUE)
+					.addContainerGap(223, Short.MAX_VALUE)
 					.addComponent(btnBka)
 					.addGap(169))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(214, Short.MAX_VALUE)
+					.addContainerGap(218, Short.MAX_VALUE)
 					.addComponent(btnSearch)
 					.addGap(192))
 				.addGroup(gl_contentPane.createSequentialGroup()
@@ -251,31 +254,33 @@ public class Userinterface extends JFrame {
 							.addComponent(comboBox_4, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(lblDate)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGap(18)
+							.addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
 							.addComponent(chckbxFlexibleDates)))
-					.addContainerGap(26, Short.MAX_VALUE))
+					.addContainerGap(32, Short.MAX_VALUE))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(114)
 					.addComponent(lblSelectFlightNr)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(comboBox_5, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(198, Short.MAX_VALUE))
+					.addContainerGap(208, Short.MAX_VALUE))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(35, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDate)
-						.addComponent(chckbxFlexibleDates))
+					.addContainerGap(48, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblNewLabel)
+							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblDate))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+							.addComponent(chckbxFlexibleDates)
+							.addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel_1)

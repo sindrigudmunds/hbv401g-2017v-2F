@@ -10,12 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-
-//import com.jgoodies.forms.layout.FormLayout;
-//import com.jgoodies.forms.layout.ColumnSpec;
-//import com.jgoodies.forms.layout.RowSpec;
-import java.awt.FlowLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -24,13 +18,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JToolBar;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -42,7 +34,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JMenu;
-import com.toedter.calendar.JDateChooser;
+
 
 public class Userinterface extends JFrame {
 
@@ -55,7 +47,9 @@ public class Userinterface extends JFrame {
 	private JTextField textField_1;
 	private DefaultTableModel tableModel;
 	private JCheckBox chckbxFlexibleDates;
-	
+	private String selectedDept, selectedDest, day, month, date;
+	private int nrAdults, nrChildren;
+	//private date selectedDate;
 
 	/**
 	 * Launch the application.
@@ -145,38 +139,95 @@ public class Userinterface extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("Going to");
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Reykjav\u00EDk", "Akureyri", "Egilssta\u00F0ir", "Gr\u00EDmsey", "\u00CDsafj\u00F6r\u00F0ur"}));
+		JComboBox<String> departurePlace = new JComboBox<String>();
+		departurePlace.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String dept = (String)departurePlace.getSelectedItem();
+				
+				switch(dept){
+				case "Reykjav\u00EDk": setSelectedDeparture("REY");
+					break;
+				case "Akureyri": setSelectedDeparture("AEY");
+					break;
+				case "Egilssta\u00F0ir": setSelectedDeparture("EGS");
+					break;
+				case "Gr\u00EDmsey": setSelectedDeparture("GRM");
+					break;
+				case "\u00CDsafj\u00F6r\u00F0ur": setSelectedDeparture("ISF");
+					break;
+				default: setSelectedDeparture("");
+					
+				}
+			}
+		});
+		departurePlace.setModel(new DefaultComboBoxModel(new String[] {"Reykjav\u00EDk", "Akureyri", "Egilssta\u00F0ir", "Gr\u00EDmsey", "\u00CDsafj\u00F6r\u00F0ur"}));
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Reykjav\u00EDk", "Akureyri", "Egilssta\u00F0ir", "Gr\u00EDmsey", "\u00CDsafj\u00F6r\u00F0ur"}));
-		
-		JLabel lblDate = new JLabel("Date");
+		JComboBox destPlace = new JComboBox();
+		destPlace.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String dept = (String)destPlace.getSelectedItem();
+				
+				switch(dept){
+				case "Reykjav\u00EDk": setSelectedDest("REY");
+					break;
+				case "Akureyri": setSelectedDest("AEY");
+					break;
+				case "Egilssta\u00F0ir": setSelectedDest("EGS");
+					break;
+				case "Gr\u00EDmsey": setSelectedDest("GRM");
+					break;
+				case "\u00CDsafj\u00F6r\u00F0ur": setSelectedDest("ISF");
+					break;
+				default: setSelectedDest("");
+					
+				}
+			}
+		});
+		destPlace.setModel(new DefaultComboBoxModel(new String[] {"Reykjav\u00EDk", "Akureyri", "Egilssta\u00F0ir", "Gr\u00EDmsey", "\u00CDsafj\u00F6r\u00F0ur"}));
 		
 		JLabel lblAdults = new JLabel("Adults");
 		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9"}));
+		JComboBox nrAdult = new JComboBox();
+		nrAdult.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nrAdults = (String)nrAdult.getSelectedItem();
+				setNrAdults(nrAdults);
+				
+			}
+		});
+		nrAdult.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9"}));
 		
 		JLabel lblChildre = new JLabel("Children");
 		
-		JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
+		JComboBox nrChild = new JComboBox();
+		nrChild.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nrChildrens = (String)nrChild.getSelectedItem();
+				setNrChildren(nrChildrens);
+			}
+		});
+		nrChild.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
 		
 		JButton btnSearch = new JButton("Search");
 		btnSearch.setIcon(new ImageIcon(Userinterface.class.getResource("/user/rsz_1spyglass.png")));
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				
+				String date = getDate(getDay(), getMonth());
 				String departure = getSelectedDeparture();
 				String dest = getSelectedDest();
-				String date = getSelectedDate();
-				int nrPassengers = getSelectedNrPassengers();
+				int nrPassengers = getNrChildren() + getNrAdults();
 				boolean flexible = getFlexibleDates();
 				ArrayList<Flight> flights = fm.searchFlights(departure, dest, date, nrPassengers, flexible);
 				// Clear previous results from the table before showing new ones
 				resetTable();
 				showResults(flights);
+				
+				/*DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+		        String date = fmt.format(this.txt_data_ini.getDate()); //jdatechooser
+		        this.teste.setText(date);*/
 			}
 		});
 		
@@ -204,7 +255,28 @@ public class Userinterface extends JFrame {
 		
 		chckbxFlexibleDates = new JCheckBox("Flexible dates");
 		
-		JDateChooser dateChooser = new JDateChooser();
+		JComboBox dayPicker = new JComboBox();
+		dayPicker.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String day = (String)dayPicker.getSelectedItem();
+				setDay(day);
+			}
+		});
+		dayPicker.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
+		
+		JLabel lblMonth = new JLabel("Month");
+		
+		JComboBox monthPicker = new JComboBox();
+		monthPicker.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String month = (String)monthPicker.getSelectedItem();
+				setMonth(month);
+			}
+		});
+		monthPicker.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
+		
+		JLabel lblDay = new JLabel("Day");
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -226,69 +298,79 @@ public class Userinterface extends JFrame {
 						.addComponent(textField_1))
 					.addContainerGap(189, Short.MAX_VALUE))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(223, Short.MAX_VALUE)
+					.addContainerGap(263, Short.MAX_VALUE)
 					.addComponent(btnBka)
 					.addGap(169))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(218, Short.MAX_VALUE)
+					.addContainerGap(258, Short.MAX_VALUE)
 					.addComponent(btnSearch)
 					.addGap(192))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel)
-						.addComponent(lblNewLabel_1))
-					.addGap(21)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(comboBox_1, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(comboBox, 0, 67, Short.MAX_VALUE))
-					.addGap(26)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblAdults)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox_3, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblChildre)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox_4, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblDate)
-							.addGap(18)
-							.addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(chckbxFlexibleDates)))
-					.addContainerGap(32, Short.MAX_VALUE))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(114)
 					.addComponent(lblSelectFlightNr)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(comboBox_5, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(208, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
+					.addContainerGap(284, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNewLabel)
+								.addComponent(lblNewLabel_1))
+							.addGap(21)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(destPlace, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(departurePlace, 0, 67, Short.MAX_VALUE))
+							.addGap(18)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblDay)
+								.addComponent(lblAdults))
+							.addGap(18)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(dayPicker, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+								.addComponent(nrAdult, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(7)
+									.addComponent(lblChildre)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(nrChild, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(4)
+									.addComponent(lblMonth)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(monthPicker, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+									.addComponent(chckbxFlexibleDates))))
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(48, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblNewLabel)
-							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblDate))
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-							.addComponent(chckbxFlexibleDates)
-							.addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addContainerGap(11, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel_1)
-						.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblAdults)
-						.addComponent(comboBox_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblChildre)
-						.addComponent(comboBox_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblNewLabel)
+						.addComponent(departurePlace, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(chckbxFlexibleDates)
+						.addComponent(lblDay)
+						.addComponent(dayPicker, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblMonth)
+						.addComponent(monthPicker, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(11)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblNewLabel_1)
+								.addComponent(destPlace, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblAdults)
+								.addComponent(lblChildre)
+								.addComponent(nrChild, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(nrAdult, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addGap(26)
 					.addComponent(btnSearch)
 					.addGap(9)
@@ -328,6 +410,8 @@ public class Userinterface extends JFrame {
 		table.getTableHeader().setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 	}
 	
+	
+
 	// Show search results in the table
 	private void showResults(ArrayList<Flight> flights) {
 		for (int i=0; i<flights.size(); i++) {
@@ -350,25 +434,53 @@ public class Userinterface extends JFrame {
 	}
 	
 	private String getSelectedDeparture() {
-		return "GRM"; //Taka burt
+		return this.selectedDept; //Taka burt
 		// TODO: láta þetta virka með UI inputinu
+	}
+	
+	private void setSelectedDeparture(String dept){
+		this.selectedDept = dept;
 	}
 	
 	private String getSelectedDest() {
-		return "AEY"; //Taka burt
+		return this.selectedDest; //Taka burt
 		// TODO: láta þetta virka með UI inputinu
 	}
+	private void setSelectedDest(String dest){
+		this.selectedDest = dest;
+	}
+	private void setDay(String day){
+		this.day = day;
+	}
+	private String getDay(){
+		return this.day;
+	}
+	private void setMonth(String month){
+		this.month = month;
+	}
+	private String getMonth(){
+		return this.month;
+	}
+	private String getDate(String day, String month){
+		String year = "/2017";
+		this.date = day + "/" + month + year;
+		return this.date;
+	}
+
 	
-	private String getSelectedDate() {
-		return "28/04/2017"; //Taka burt
+	private int getNrAdults() {
+		return this.nrAdults; //Taka burt
 		// TODO: láta þetta virka með UI inputinu
 	}
-	
-	private int getSelectedNrPassengers() {
-		return 3; //Taka burt
-		// TODO: láta þetta virka með UI inputinu
+	private void setNrAdults(String adults){
+		this.nrAdults = Integer.parseInt(adults);
 	}
-	
+	private int getNrChildren(){
+		return this.nrChildren;
+	}
+	private void setNrChildren(String children){
+		this.nrChildren = Integer.parseInt(children);
+	}
 	private boolean getFlexibleDates() {
 		// Check if user wants to search by flexible dates or not
 		if (chckbxFlexibleDates.isSelected()) {

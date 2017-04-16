@@ -100,6 +100,37 @@ public class FlightStorageImpl implements FlightStorage {
 		String formattedDate = form.format(date);
 		return formattedDate;
 	}
+
+	@Override
+	public Flight searchID(int flightID) {
+		// Connect to the database
+		DatabaseManager dm = new DatabaseManager();
+		dm.connect();
+		// Query the database
+		String sql = "SELECT * FROM Flights Where flightID = '" + flightID + "'";
+		ResultSet rs = dm.queryDatabase(sql);		
+		// Change the ResultSet into an ArrayList of Flight objects
+		//Flight flRes;
+		dm.disconnect();
+		
+		return (Flight) rs;
+	}
+	
+	 @Override
+	public void updateSeats(int flightID, int nrPassengers){
+		
+		DatabaseManager dm = new DatabaseManager();
+		dm.connect();
+		// Query the database
+		String sql = "UPDATE FLights SET availableSeats = '" + nrPassengers + "' Where flightID = '" + flightID + "'";
+		dm.updateDatabase(sql);		
+		
+		// Change the ResultSet into an ArrayList of Flight objects
+		//Flight flRes;
+		
+		dm.disconnect();
+	
+	}
 }
 
 

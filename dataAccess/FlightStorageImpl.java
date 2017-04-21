@@ -51,7 +51,7 @@ public class FlightStorageImpl implements FlightStorage {
 	
 	// Creates strings to be able to return flights on "flexible" dates, 
 	// "flex" days before and after the searched date
-	public ArrayList<String> flexibleDates(String flightD, int flex) {
+	private ArrayList<String> flexibleDates(String flightD, int flex) {
 		ArrayList<String> dates = new ArrayList<String>();
 		Date flightDate = stringToDate(flightD);
 		Calendar cal = Calendar.getInstance();
@@ -109,14 +109,15 @@ public class FlightStorageImpl implements FlightStorage {
 		// Query the database
 		String sql = "SELECT * FROM Flights Where flightID = '" + flightID + "'";
 		ResultSet rs = dm.queryDatabase(sql);		
-		// Change the ResultSet into an ArrayList of Flight objects
-		//Flight flRes;
-		dm.disconnect();
 		
-		return (Flight) rs;
+		ArrayList <Flight> fl = convertToFlight(rs);
+		Flight flightFromId = fl.get(0);		
+		dm.disconnect();
+
+		return flightFromId;
 	}
 	
-	 @Override
+	@Override
 	public void updateSeats(int flightID, int nrPassengers){
 		
 		DatabaseManager dm = new DatabaseManager();

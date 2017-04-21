@@ -115,7 +115,7 @@ public class Userinterface extends JFrame {
 		JMenuItem mntmAboutThisProgram = new JMenuItem("About this program");
 		mntmAboutThisProgram.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog (null, "This program was made for the class �r�un hugb�na�ar spring 2017 by Anna Karen, Gu�r�n ��ra and Sindri ��r", "About this program", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog (null, "This program was made for the class �r�un hugb�na�ar spring 2017 by Anna Karen, Gu�r�n ��ra and Sindri ��r", "About this program", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		mnInfo.add(mntmAboutThisProgram);
@@ -128,18 +128,9 @@ public class Userinterface extends JFrame {
 		btnBka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//resetTable();
-				//int id = createBooking();
-				int flightID = getBookingFlightID();
-				int nrPassengers = getNrAdults() + getNrChildren();
-				int seatsAfterBooking = getNrSeats() - nrPassengers;
-				createBooking(flightID, seatsAfterBooking);
-				//resetTable();
-				int slembitala = 100 + (int)(Math.random() * 999);
-				String bookingnumber = Integer.toString(slembitala);
-				JOptionPane.showMessageDialog (null, "Thank you for booking a flight with Fake Airlines. Your booking number is: F" + bookingnumber, "Booking information", JOptionPane.INFORMATION_MESSAGE);
+				int bookingNumber = createBooking();
+				JOptionPane.showMessageDialog (null, "Thank you for booking a flight with Fake Airlines. Your booking number is: " + bookingNumber, "Booking information", JOptionPane.INFORMATION_MESSAGE);
 				System.exit(0);
-				// TODO: birta skjá með id-inu svo notandinn viti að búið sé að bóka
-				//System.out.println("Your booking number is: "+id);
 			}
 		});
 		String data[][] = {};
@@ -230,8 +221,6 @@ public class Userinterface extends JFrame {
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				
 				String date = getDate(getDay(), getMonth());
 				String departure = getSelectedDeparture();
 				String dest = getSelectedDest();
@@ -246,10 +235,6 @@ public class Userinterface extends JFrame {
 				} else {
 					showResults(flights);
 				}
-				
-				/*DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-		        String date = fmt.format(this.txt_data_ini.getDate()); //jdatechooser
-		        this.teste.setText(date);*/
 			}
 		});
 		
@@ -395,8 +380,6 @@ public class Userinterface extends JFrame {
 		table.getTableHeader().setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
-	            // do some actions here, for example
-	            // print first column value from selected row
 	            int flightID = (int) table.getValueAt(table.getSelectedRow(), 0);
 	            int nrSeats = (int) table.getValueAt(table.getSelectedRow(), 5);
 	            int flightPrice = (int) table.getValueAt(table.getSelectedRow(), 6);
@@ -411,8 +394,6 @@ public class Userinterface extends JFrame {
 	    });
 	}
 	
-	
-
 	// Show search results in the table
 	private void showResults(ArrayList<Flight> flights) {
 		for (int i=0; i<flights.size(); i++) {
@@ -435,8 +416,7 @@ public class Userinterface extends JFrame {
 	}
 	
 	private String getSelectedDeparture() {
-		return this.selectedDept; //Taka burt
-		// TODO: láta þetta virka með UI inputinu
+		return this.selectedDept;
 	}
 	
 	private void setSelectedDeparture(String dept){
@@ -444,8 +424,7 @@ public class Userinterface extends JFrame {
 	}
 	
 	private String getSelectedDest() {
-		return this.selectedDest; //Taka burt
-		// TODO: láta þetta virka með UI inputinu
+		return this.selectedDest; 
 	}
 	private void setSelectedDest(String dest){
 		this.selectedDest = dest;
@@ -473,11 +452,9 @@ public class Userinterface extends JFrame {
 	private void setFlightPrice(int flightPrice){
 		this.flightPrice = flightPrice;
 	}
-
 	
 	private int getNrAdults() {
-		return this.nrAdults; //Taka burt
-		// TODO: láta þetta virka með UI inputinu
+		return this.nrAdults;
 	}
 	private void setNrAdults(String adults){
 		this.nrAdults = Integer.parseInt(adults);
@@ -498,25 +475,15 @@ public class Userinterface extends JFrame {
 	}
 	
 	// Creates a new booking in the database with information from the UI
-	private void createBooking(int flightID, int nrSeatsAfterBooking) {
-		//Flight flight = getSelectedFlight();
-		/*int nrBag = getSelectedNrBag();
-		ArrayList<Passenger> passengers = getPassengers();
-		String specialNeeds = getSpecialNeeds();
+	private int createBooking() {
 		int flightID = getBookingFlightID();
-		int bookingID  = bm.createBooking(flightID, nrBag, passengers, specialNeeds);
-		return bookingID;*/
-		
-		fs.updateSeats(flightID, nrSeatsAfterBooking);
-		
+		int nrBag = getSelectedNrBag();
+		int nrAdult = getNrAdults();
+		int nrChildren = getNrChildren();
+		String specialNeeds = getSpecialNeeds();	
+		int bookingID = bm.createBooking(flightID, nrBag, nrAdult, nrChildren, specialNeeds);
+		return bookingID;
 	}
-	
-	/*private Flight getSelectedFlight() {
-		// Taka burt
-		return new Flight(201, "GRM", "AEY", "15:00", "17/04/2017", 35, 17000);
-		// TODO: skila flug hlutnum sem notandi hefur valið
-	}*/
-	
 	
 	private int getSelectedNrBag() {
 		return 5;//Taka burt
@@ -534,24 +501,13 @@ public class Userinterface extends JFrame {
 	private void setNrSeats(int nrSeats){
 		this.nrSeats = nrSeats;
 	}
-	private ArrayList<Passenger> getPassengers() {
-		// Taka burt
-		PassengerManager pm = new PassengerManager();
-		Passenger p_a = new Passenger("Jón", true);
-		Passenger p_b = new Passenger("Gunna", true);
-		Passenger p_c = new Passenger("Óli", false);
-		pm.addPassenger(p_a);
-		pm.addPassenger(p_b);
-		pm.addPassenger(p_c);
-		return pm.getPassengers();
-		// TODO: láta passenger manager gera arraylist af passengers 
-	}
+	
+	/*private ArrayList<Passenger> getPassengers() {
+	}*/
 	
 	private String getSpecialNeeds() {
 		return "Passenger with a dog"; // Taka burt
 		// TODO: skila textanum úr special needs glugganum
 	}
-	/*String flightprice = Integer.toString(getFlightPrice());
-	String totalFlightPrice = "Total Price: " + flightprice + " kr.";
-	lblTotalPrice.setText(totalFlightPrice);*/
+	
 }

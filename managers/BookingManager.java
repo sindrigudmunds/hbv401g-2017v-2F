@@ -1,30 +1,27 @@
 package managers;
-import java.util.ArrayList;
 import models.*;
 import dataAccess.*;
 
 public class BookingManager {
 	private BookingStorage bs;
-	private FlightStorage fs;
+	private FlightStorageImpl fs;
 	
 	public BookingManager() {
 		bs = new BookingStorage();
+		fs = new FlightStorageImpl();
 	}
 	
 	public boolean checkLegality(Booking booking){
 		boolean legal = true;
 		if(booking.getNrBag()<0) legal = false;
-		if(booking.getPassengers().isEmpty()) legal = false;
-		if(booking.getFlight().getAvailableSeats() < booking.getPassengers().size()) legal = false;
+		if(booking.getFlight().getAvailableSeats() < (booking.getNrAdult()+booking.getNrChildren()) ) legal = false;
 		
 		return legal;
 	}
 	
-	public int createBooking(int flightID, int nrBag, ArrayList<Passenger> passengers, String specialNeeds){
-		
-		Flight flight = searchFlightID(flightID);
-		
-		Booking newBooking = new Booking(flight, nrBag, passengers, specialNeeds);
+	public int createBooking(int flightID, int nrBag, int nrAdult, int nrChildren, String specialNeeds){
+		Flight flight = fs.searchID(flightID);
+		Booking newBooking = new Booking(flight, nrBag, nrAdult, nrChildren, specialNeeds);
 		if(checkLegality(newBooking)){
 			newBooking.setBookingID(bs.addBooking(newBooking));
 			return newBooking.getBookingID();
@@ -33,8 +30,4 @@ public class BookingManager {
 		//return newBooking.getBookingID();
 		return 0;
 	}
-	public Flight searchFlightID(int flightID){
-		return fs.searchID(flightID);
-	}
-
 }

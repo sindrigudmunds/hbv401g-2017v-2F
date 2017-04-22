@@ -48,12 +48,13 @@ public class Userinterface extends JFrame {
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private JCheckBox chckbxFlexibleDates;
-	private String selectedDept, selectedDest, day, month, date;
-	private int nrAdults, nrChildren, bookingFlightID, nrSeats, flightPrice;
+	private String selectedDept, selectedDest, day, month, date, specialNeeds;
+	private int nrAdults, nrChildren, bookingFlightID, nrSeats, flightPrice, selectedNrBags;
 	private Flight flight;
 	private JComboBox<String> departurePlace;
 	private JComboBox destPlace;
 	private JLabel lblTotalPrice;
+	private JTextField txtSpecialRequests;
 	//private date selectedDate;
 
 	/**
@@ -270,11 +271,26 @@ public class Userinterface extends JFrame {
 		
 		JLabel lblDate = new JLabel("Date");
 		
+		JComboBox nrBagsCombobox = new JComboBox();
+		nrBagsCombobox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int nrOfBags = (int)nrBagsCombobox.getSelectedItem();
+				if (!(nrOfBags < 0)){
+					setSelectedNrBag(nrOfBags);
+				}
+			}
+		});
+		nrBagsCombobox.setModel(new DefaultComboBoxModel(new String[] {"Number of Bags", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
+		
+		txtSpecialRequests = new JTextField();
+		txtSpecialRequests.setText("Special Requests");
+		txtSpecialRequests.setColumns(10);
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(56)
@@ -307,14 +323,18 @@ public class Userinterface extends JFrame {
 									.addComponent(btnSearch, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED))))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(203)
+							.addContainerGap()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(txtSpecialRequests)
+								.addComponent(nrBagsCombobox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addGap(92)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblTotalPrice, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(129)
 									.addComponent(label_1))
 								.addComponent(btnBka))
-							.addPreferredGap(ComponentPlacement.RELATED, 189, Short.MAX_VALUE)))
+							.addGap(189)))
 					.addGap(0))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(97)
@@ -347,18 +367,23 @@ public class Userinterface extends JFrame {
 					.addComponent(btnSearch)
 					.addGap(18)
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 243, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGap(11)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(label)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(lblToBookA)
 							.addGap(18)
-							.addComponent(lblTotalPrice, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(nrBagsCombobox)
+								.addComponent(lblTotalPrice, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))))
 					.addGap(18)
-					.addComponent(btnBka)
-					.addGap(17)
-					.addComponent(label_1)
-					.addGap(43))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(btnBka)
+							.addGap(17)
+							.addComponent(label_1))
+						.addComponent(txtSpecialRequests, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(13))
 		);
 		panel.setLayout(new BorderLayout(0, 0));
 		
@@ -479,15 +504,18 @@ public class Userinterface extends JFrame {
 		int flightID = getBookingFlightID();
 		int nrBag = getSelectedNrBag();
 		int nrAdult = getNrAdults();
-		int nrChildren = getNrChildren();
-		String specialNeeds = getSpecialNeeds();	
+		int nrChildren = getNrChildren(); 
+		String specialNeeds = txtSpecialRequests.getText(); 	
 		int bookingID = bm.createBooking(flightID, nrBag, nrAdult, nrChildren, specialNeeds);
 		return bookingID;
 	}
 	
 	private int getSelectedNrBag() {
-		return 5;//Taka burt
+		return this.selectedNrBags;
 		// TODO: skila fjölda taskna sem notandi hefur valið
+	}
+	private void setSelectedNrBag(int nrBag){
+		this.selectedNrBags = nrBag;
 	}
 	private void setBookingFlightID(int flightID){
 		this.bookingFlightID = flightID;
@@ -504,10 +532,11 @@ public class Userinterface extends JFrame {
 	
 	/*private ArrayList<Passenger> getPassengers() {
 	}*/
-	
+	private void setSpecialNeeds(String needs){
+		this.specialNeeds = needs;
+	}
 	private String getSpecialNeeds() {
-		return "Passenger with a dog"; // Taka burt
+		return this.specialNeeds; // Taka burt
 		// TODO: skila textanum úr special needs glugganum
 	}
-	
 }

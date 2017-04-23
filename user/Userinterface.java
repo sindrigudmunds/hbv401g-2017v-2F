@@ -325,6 +325,12 @@ public class Userinterface extends JFrame {
 		nrBagsCombobox.setModel(new DefaultComboBoxModel(new String[] {"Number of Bags", "0", "1", "2", "3", "4"}));
 		
 		txtSpecialRequests = new JTextField();
+		txtSpecialRequests.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				txtSpecialRequests.setText("");
+			}
+		});
 		txtSpecialRequests.setText("Special Requests");
 		txtSpecialRequests.setToolTipText("");
 		txtSpecialRequests.setColumns(10);

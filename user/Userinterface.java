@@ -122,6 +122,19 @@ public class Userinterface extends JFrame {
 			}
 		});
 		mnInfo.add(mntmAboutThisProgram);
+		
+		JMenu mnBooking = new JMenu("Booking");
+		menuBar.add(mnBooking);
+		
+		JMenuItem mntmDeleteBooking = new JMenuItem("Delete Booking");
+		mntmDeleteBooking.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int bookingID = Integer.parseInt(JOptionPane.showInputDialog(null, "Please input your booking number", "Delete Booking", JOptionPane.QUESTION_MESSAGE));
+				bm.deleteBooking(bookingID);
+				JOptionPane.showMessageDialog(null, "Your booking has been deleted, have a nice day", "Booking Deleted", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		mnBooking.add(mntmDeleteBooking);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -313,6 +326,7 @@ public class Userinterface extends JFrame {
 		
 		txtSpecialRequests = new JTextField();
 		txtSpecialRequests.setText("Special Requests");
+		txtSpecialRequests.setToolTipText("");
 		txtSpecialRequests.setColumns(10);
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);

@@ -30,4 +30,7 @@ public class BookingManager {
 		//return newBooking.getBookingID();
 		return 0;
 	}
+	public void deleteBooking(int bookingID){
+		bs.removeBooking(bookingID);
+	}
 }

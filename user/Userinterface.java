@@ -59,9 +59,6 @@ public class Userinterface extends JFrame {
 	private JComboBox monthPicker;
 	private JComboBox nrAdult, nrChild, nrBagsCombobox;
 
-	
-	//private date selectedDate;
-
 	/**
 	 * Launch the application.
 	 */

@@ -7,5 +7,4 @@ import models.Flight;
 public interface FlightStorage {
 	public ArrayList<Flight> search(String flightDepart, String flightDest, String flightD, int availableSeats, boolean flexible);
 	public Flight searchID(int flightID);
-	public void updateSeats(int flightID, int seats);
 }

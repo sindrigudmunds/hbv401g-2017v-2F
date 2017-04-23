@@ -80,14 +80,13 @@ public class FlightStorageImpl implements FlightStorage {
 		return flightList;		
 	}
 	
-//	Creates Date from a string of the form "dd/MM/yyyy"
+	// Creates Date from a string of the form "dd/MM/yyyy"
 	private Date stringToDate(String str) {
 		Date date = null;
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			sdf.setLenient(false);
 			date = sdf.parse(str);
-			
 		} catch (ParseException e) {
 			System.err.println(e);
 		}
@@ -102,11 +101,11 @@ public class FlightStorageImpl implements FlightStorage {
 	}
 
 	@Override
+	// Get a flight object that fits the flight with this ID in the database
 	public Flight searchID(int flightID) {
-		// Connect to the database
 		DatabaseManager dm = new DatabaseManager();
 		dm.connect();
-		// Query the database
+
 		String sql = "SELECT * FROM Flights Where flightID = '" + flightID + "'";
 		ResultSet rs = dm.queryDatabase(sql);		
 		
@@ -115,22 +114,6 @@ public class FlightStorageImpl implements FlightStorage {
 		dm.disconnect();
 
 		return flightFromId;
-	}
-	
-	@Override
-	public void updateSeats(int flightID, int nrPassengers){
-		
-		DatabaseManager dm = new DatabaseManager();
-		dm.connect();
-		// Query the database
-		String sql = "UPDATE FLights SET availableSeats = '" + nrPassengers + "' Where flightID = '" + flightID + "'";
-		dm.updateDatabase(sql);		
-		
-		// Change the ResultSet into an ArrayList of Flight objects
-		//Flight flRes;
-		
-		dm.disconnect();
-	
 	}
 }
 

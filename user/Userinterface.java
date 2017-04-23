@@ -55,6 +55,11 @@ public class Userinterface extends JFrame {
 	private JComboBox destPlace;
 	private JLabel lblTotalPrice;
 	private JTextField txtSpecialRequests;
+	private JComboBox dayPicker;
+	private JComboBox monthPicker;
+	private JComboBox nrAdult, nrChild, nrBagsCombobox;
+
+	
 	//private date selectedDate;
 
 	/**
@@ -128,10 +133,15 @@ public class Userinterface extends JFrame {
 		btnBka.setIcon(new ImageIcon(Userinterface.class.getResource("/user/rsz_luggage.png")));
 		btnBka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//resetTable();
-				int bookingNumber = createBooking();
-				JOptionPane.showMessageDialog (null, "Thank you for booking a flight with Fake Airlines. Your booking number is: " + bookingNumber, "Booking information", JOptionPane.INFORMATION_MESSAGE);
-				System.exit(0);
+				// Only create a booking if a flight has been chosen from the list
+				String msg = checkChosenBookingParam();
+				if (msg == "") {
+					int bookingNumber = createBooking();
+					JOptionPane.showMessageDialog (null, "Thank you for booking a flight with Fake Airlines. Your booking number is: " + bookingNumber, "Booking information", JOptionPane.INFORMATION_MESSAGE);
+					System.exit(0);
+				} else {
+					JOptionPane.showMessageDialog (null, msg, "Searching Error", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		String data[][] = {};
@@ -198,7 +208,7 @@ public class Userinterface extends JFrame {
 		
 		JLabel lblAdults = new JLabel("Passengers");
 		
-		JComboBox nrAdult = new JComboBox();
+		nrAdult = new JComboBox();
 		nrAdult.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nrAdults = (String)nrAdult.getSelectedItem();
@@ -208,7 +218,7 @@ public class Userinterface extends JFrame {
 		});
 		nrAdult.setModel(new DefaultComboBoxModel(new String[] {"Adults", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
 		
-		JComboBox nrChild = new JComboBox();
+		nrChild = new JComboBox();
 		nrChild.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nrChildrens = (String)nrChild.getSelectedItem();
@@ -222,20 +232,30 @@ public class Userinterface extends JFrame {
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String date = getDate(getDay(), getMonth());
-				String departure = getSelectedDeparture();
-				String dest = getSelectedDest();
-				int nrPassengers = getNrChildren() + getNrAdults();
-				boolean flexible = getFlexibleDates();
-				ArrayList<Flight> flights = fm.searchFlights(departure, dest, date, nrPassengers, flexible);
-				// Clear previous results from the table before showing new ones
-				resetTable();
-				
-				if (flights.isEmpty()){
-					JOptionPane.showMessageDialog (null, "Your search returned no results. Please refine your search parameters.", "Searching Error", JOptionPane.INFORMATION_MESSAGE);
+				String msg = checkChosenSearchParam();
+				// Only search for flights if the user has chosen from all the dropdown lists
+				if (msg == "") {
+					// Get information from UI and search for a matching flight
+					String date = getDate(getDay(), getMonth());
+					String departure = getSelectedDeparture();
+					String dest = getSelectedDest();
+					int nrPassengers = getNrChildren() + getNrAdults();
+					boolean flexible = getFlexibleDates();
+					ArrayList<Flight> flights = fm.searchFlights(departure, dest, date, nrPassengers, flexible);
+					
+					// Clear previous results from the table before showing new ones
+					resetTable();
+					
+					// If the search came back with no results
+					if (flights.isEmpty()){
+						JOptionPane.showMessageDialog (null, "Your search returned no results. Please try again with different search parameters.", "Searching Error", JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						showResults(flights);
+					}
 				} else {
-					showResults(flights);
+					JOptionPane.showMessageDialog (null, msg, "Searching Error", JOptionPane.INFORMATION_MESSAGE);
 				}
+				
 			}
 		});
 		
@@ -243,7 +263,7 @@ public class Userinterface extends JFrame {
 		
 		chckbxFlexibleDates = new JCheckBox("Flexible \r\ndates");
 		
-		JComboBox dayPicker = new JComboBox();
+		dayPicker = new JComboBox();
 		dayPicker.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String day = (String)dayPicker.getSelectedItem();
@@ -252,7 +272,7 @@ public class Userinterface extends JFrame {
 		});
 		dayPicker.setModel(new DefaultComboBoxModel(new String[] {"Day", "01", "02", "03", "04", "05", "06", "07", "08", "09", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		
-		JComboBox monthPicker = new JComboBox();
+		monthPicker = new JComboBox();
 		monthPicker.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String month = (String)monthPicker.getSelectedItem();
@@ -271,7 +291,7 @@ public class Userinterface extends JFrame {
 		
 		JLabel lblDate = new JLabel("Date");
 		
-		JComboBox nrBagsCombobox = new JComboBox();
+		nrBagsCombobox = new JComboBox();
 		nrBagsCombobox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String nrOfBags = (String)nrBagsCombobox.getSelectedItem();
@@ -524,7 +544,6 @@ public class Userinterface extends JFrame {
 	
 	private int getSelectedNrBag() {
 		return this.selectedNrBags;
-		// TODO: skila fjölda taskna sem notandi hefur valið
 	}
 	private void setSelectedNrBag(int nrBag){
 		this.selectedNrBags = nrBag;
@@ -541,14 +560,32 @@ public class Userinterface extends JFrame {
 	private void setNrSeats(int nrSeats){
 		this.nrSeats = nrSeats;
 	}
-	
-	/*private ArrayList<Passenger> getPassengers() {
-	}*/
 	private void setSpecialNeeds(String needs){
 		this.specialNeeds = needs;
 	}
 	private String getSpecialNeeds() {
-		return this.specialNeeds; // Taka burt
-		// TODO: skila textanum úr special needs glugganum
+		return this.specialNeeds; 
+	}
+	
+	private String checkChosenSearchParam() {
+		String msg = "";
+		if (departurePlace.getSelectedIndex() <= 0 || destPlace.getSelectedIndex() <= 0) {
+			msg = "Please choose from the dropdown lists where you are \"Departing From\" and \"Going To\".";
+		} else if (dayPicker.getSelectedIndex() <= 0 || monthPicker.getSelectedIndex() <= 0){
+			msg = "Please choose a departure date.";
+		} else if (nrAdult.getSelectedIndex() <= 0 || nrChild.getSelectedIndex() <= 0){
+			msg = "Please add information about number of passengers.";
+		}
+		return msg;
+	}
+	
+	private String checkChosenBookingParam() {
+		String msg = "";
+		if (tableModel.getRowCount() <= 0 || getBookingFlightID() <= 0) {
+			msg = "Please choose a flight from the list.";
+		} else if (nrBagsCombobox.getSelectedIndex() <= 0) {
+			msg = "Please choose how many bags you want.";
+		}
+		return msg;
 	}
 }

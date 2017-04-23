@@ -274,13 +274,22 @@ public class Userinterface extends JFrame {
 		JComboBox nrBagsCombobox = new JComboBox();
 		nrBagsCombobox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int nrOfBags = (int)nrBagsCombobox.getSelectedItem();
-				if (!(nrOfBags < 0)){
-					setSelectedNrBag(nrOfBags);
+				
+				String nrOfBags = (String)nrBagsCombobox.getSelectedItem();
+				switch(nrOfBags){
+					
+					case "1": setSelectedNrBag(1);
+						break;
+					case "2": setSelectedNrBag(2);
+						break;
+					case "3": setSelectedNrBag(3);
+						break;
+					case "4": setSelectedNrBag(4);
+					default: setSelectedNrBag(0);
 				}
 			}
 		});
-		nrBagsCombobox.setModel(new DefaultComboBoxModel(new String[] {"Number of Bags", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
+		nrBagsCombobox.setModel(new DefaultComboBoxModel(new String[] {"Number of Bags", "0", "1", "2", "3", "4"}));
 		
 		txtSpecialRequests = new JTextField();
 		txtSpecialRequests.setText("Special Requests");

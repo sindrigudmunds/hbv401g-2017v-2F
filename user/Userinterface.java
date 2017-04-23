@@ -274,10 +274,8 @@ public class Userinterface extends JFrame {
 		JComboBox nrBagsCombobox = new JComboBox();
 		nrBagsCombobox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				String nrOfBags = (String)nrBagsCombobox.getSelectedItem();
 				switch(nrOfBags){
-					
 					case "1": setSelectedNrBag(1);
 						break;
 					case "2": setSelectedNrBag(2);
@@ -287,6 +285,11 @@ public class Userinterface extends JFrame {
 					case "4": setSelectedNrBag(4);
 					default: setSelectedNrBag(0);
 				}
+				int totalPrice = getFlightPrice()*getNrAdults() + (getFlightPrice()/ 2)*getNrChildren() + getSelectedNrBag()*1000;
+	            String flightprice = Integer.toString(totalPrice);
+				String totalFlightPrice = "Total Price: " + flightprice + " kr.";
+				lblTotalPrice.setText(totalFlightPrice);
+				
 			}
 		});
 		nrBagsCombobox.setModel(new DefaultComboBoxModel(new String[] {"Number of Bags", "0", "1", "2", "3", "4"}));
